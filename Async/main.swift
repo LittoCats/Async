@@ -9,4 +9,24 @@
 import Foundation
 
 println("Hello, World!")
+var flag = false
+Async.background { () -> Void in
+    println("1")
+}
+Async.initiated { () -> Void in
+    println("2")
+    flag = true
+}
+Async.background { () -> Void in
+    println("3")
+}
+Async.background { () -> Void in
+    println("4")
+}
+Async.initiated { () -> Void in
+    println("5")
+}
 
+while !flag{
+    fgetc(stdin)
+}
