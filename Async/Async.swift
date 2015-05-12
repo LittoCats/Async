@@ -21,7 +21,7 @@ struct Async {
     private init(_ block: dispatch_block_t, queue: dispatch_queue_t, interval: NSTimeInterval) {
         var _block = Async.wrapBlock(block)
         
-        if interval != 0.0 {
+        if interval <= 0.0 {
             dispatch_async(queue, _block)
         }else{
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC)*Int64(interval)), queue, _block)
@@ -35,7 +35,7 @@ struct Async {
     private func async(after interval: NSTimeInterval = 0.0, block: dispatch_block_t, inQueue queue: dispatch_queue_t) -> Async {
         var _block: dispatch_block_t = { () -> Void in
             var __block = Async.wrapBlock(block)
-            if interval != 0.0 {
+            if interval <= 0.0 {
                 dispatch_async(queue, __block)
             }else{
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC)*Int64(interval)), queue, __block)
